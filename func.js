@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
       exsTasks();
+      getDate();
 })
 
 //calendar
@@ -97,8 +98,65 @@ for( let i = 0; i < calendarTd.length; i++){
 }
 
 //lista
-
+const procent = document.getElementById('progressBar');
+const num = document.getElementById('procenat');
 let tasks = [];
+let fin = 0;
+
+const getDate = () => {
+    const today = new Date().getDay();
+    if( today == localStorage.getItem('today')){
+         fin = localStorage.getItem('finished');
+
+    }else{
+        localStorage.setItem('today', today);
+        localStorage.setItem('finished', 0);
+    }
+}
+
+
+
+
+
+const getElements =  (task) => {
+    num.innerText = fin!=0 ? Math.ceil(fin / tasks.length * 100) : 0;
+    procent.value = fin!=0 ? Math.ceil(fin / tasks.length * 100) : 0;
+    
+    const div = document.getElementById('innerDiv');
+    div.appendChild(new taskDiv(task).fullDiv());
+}
+
+
+const addBtn = document.getElementById('new');
+
+addBtn.addEventListener('click', () => {
+    if( tasks.length < 8){
+        const input = document.getElementById('inpl');
+    const value = input.value;
+    tasks.push(value);
+ 
+   getElements(value);
+   input.value = '';
+
+    }
+  
+})
+
+
+
+const exsTasks = () => {
+    for( let i = 0; i < localStorage.length; i++){
+        if( localStorage.key(i) == 'finished' || localStorage.key(i) == 'today'){
+            continue;
+
+        }
+        const task = localStorage.getItem(localStorage.key(i));
+        tasks.push(task);
+        console.log(task);
+        getElements(task);
+    }
+}
+
 
 class taskDiv{
     constructor(value){
@@ -124,6 +182,11 @@ class taskDiv{
             setTimeout(() => {
                 localStorage.removeItem(`task ${this.element.innerText}`);
                fullDiv.remove();
+               fin++;
+               console.log(tasks.length)
+               num.innerText = fin!=0 ? Math.ceil(fin / tasks.length * 100) : 0;
+    procent.value = fin!=0 ? Math.ceil(fin / tasks.length * 100) : 0;
+
              
                
             }, 3000)
@@ -136,35 +199,6 @@ class taskDiv{
 
 
 
-const getElements =  (task) => {
-    const div = document.getElementById('innerDiv');
-    div.appendChild(new taskDiv(task).fullDiv());
-}
-
-
-const addBtn = document.getElementById('new');
-
-addBtn.addEventListener('click', () => {
-    if( tasks.length < 8){
-        const input = document.getElementById('inpl');
-    const value = input.value;
-    tasks.push(value);
- 
-   getElements(value);
-   input.value = '';
-    }
-  
-})
-
-
-
-const exsTasks = () => {
-    for( let i = 0; i < localStorage.length; i++){
-        const task = localStorage.getItem(localStorage.key(i));
-        console.log(task);
-        getElements(task);
-    }
-}
 
 
 
