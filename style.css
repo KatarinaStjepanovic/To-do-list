@@ -1,0 +1,390 @@
+:root{
+    --main-body: #D7BCD7;
+    --main-color: #D134D1;
+    --bubbles-color: white;
+    --darker-color: #522352;
+    --text-color: #732D73;
+    --main-font: 'Pixelify Sans';
+    --num-font: 'Libre Baskerville';
+    --num-color : #B7A5D4;
+}
+
+
+
+*{
+    box-sizing: border-box;
+}
+
+body{
+   background-color: var(--main-body);
+   margin-top: 50px;
+   margin-left: 100px;
+   height: 100vh;
+  max-width: fit-content;
+   position: relative;
+}
+
+#top{
+    position: relative;
+    top: 0px;
+    left: 90px;
+    height: 55px;
+}
+
+#inpl{ 
+  position: absolute;
+    width: 800px;
+    height: 65px;
+   background-color: transparent;
+    border: none;
+    z-index: 1;
+    border-radius: 50px;
+    padding-left: 120px;
+    outline: none;
+    caret-color: var(--main-body);
+    font-family: var(--main-font);
+    height:max-content;
+    line-height: 50px;
+    font-size: 18px;
+    color: var(--text-color);
+    top: 50%;
+    transform: translateY(-40%);
+
+}
+
+#inpl::placeholder{
+    font-family: var(--main-font);
+    height:max-content;
+    line-height: 50px;
+    opacity: 50%;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+
+
+
+#bubbleIn{
+    z-index: 0;
+    background-color: var(--bubbles-color);
+    height: 65px;
+    width: 820px;
+    position: relative;
+    border-radius: 50px;
+    transition: all 0.5s ease-in-out;
+}
+
+#inpl:hover + #bubbleIn{
+    box-shadow: 8px 7px 0px 0px rgba(105, 101, 106, 0.422);
+}
+
+#inputPic{
+    position: absolute;
+    height: fit-content;
+    width: fit-content;
+    scale: 0.8;
+    z-index: 0;
+    top: -10px;
+    left: -100px;
+
+}
+
+#new{
+    position: absolute;
+    height: 50px;
+    width: 50px;
+    top: 10px;
+    left: 860px;
+    transition: all 0.5s ease-in-out;
+}
+
+#new:hover{
+    cursor: pointer;
+    box-shadow: 5px 4px 0px 0px rgba(105, 101, 106, 0.422);
+}
+
+.grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: absolute;
+    width: 975px;
+    left: 90px;
+  
+}
+#left{
+    width: 100%;
+}
+
+#right{
+    width: 100%;
+}
+
+#list{
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     z-index: 1;
+     position: absolute;
+     width: 590px;
+  height: 570px;
+  top: 70px;
+  right: 0px;
+  border-radius: 70px;
+
+}
+
+#listBubble{
+  background-color: var(--bubbles-color);
+  border-radius: 70px;
+  width: 590px;
+  height: 570px;
+  position: relative;
+  top: 70px;
+  right: 0px;
+  z-index: 0;
+}
+
+#imgList{
+    width: 600px;
+    height: fit-content;
+    position: absolute;
+    top: 70px;
+    right: -3px;
+    z-index: 0;
+}
+
+#progBubble{
+    position: absolute;
+    top: 200px;
+    left: 15px;
+    height: 80px;
+    width: 280px;
+    border-radius: 20px;
+    background-color: var(--bubbles-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#procenat{
+    font-family: var(--main-font);
+    color: var(--text-color);
+    font-weight: bold;
+    font-size: large;
+    padding: 10px;
+
+}
+
+#progOkvir{
+    height: 90px;
+    width: 290px;
+    position: absolute;
+    top: 195px;
+    left: 15px;
+}
+
+#progressBar{
+    height: 15px;
+    width: 150px;
+    -webkit-appearance: none; /* za Chrome/Safari */
+    appearance: none;  
+    border-radius: 10px;        
+    
+}
+
+#progressBar::-webkit-progress-bar {
+    background-color: lightgray; 
+    border-radius: 10px; 
+  }
+  
+  #progressBar::-webkit-progress-value {
+    background-color:var(--main-color); 
+    border-radius: 10px; 
+  }
+
+  #progressBar::-moz-progress-bar {
+    background-color: var(--main-color); 
+  }
+
+  #calendar{
+    position: absolute;
+    background-color: var(--bubbles-color);
+    top: 350px;
+    height: 250px;
+    width: 280px;
+    left: 15px;
+    transition: all 0.5s ease-in-out;
+  }
+
+  #calendar:hover{
+    box-shadow: 10px 7px 0px 0px rgba(105, 101, 106, 0.422);
+  }
+  
+ .hoveredTd{
+    background-color: var(--text-color);
+   border-radius: 50%;
+   color: var(--main-body);
+   cursor: pointer;
+ }
+
+ .currentDate{
+   border-radius: 50%;
+   border: 1px solid var(--darker-color);
+   color: var(--darker-color);
+   height: 25px;
+   width: 25px;
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%,-50%);
+ }
+
+
+
+ .dateTd{
+    position: relative;
+
+ }
+  #month{
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 20px;
+    font-family: var(--main-font);
+    color: var(--darker-color);
+    font-weight: bold;
+    font-size: 22px;
+  }
+
+  #underline{
+    position: absolute;
+    top: 40px;
+    left: 40px;
+    width: 70%;
+  }
+
+
+  #weekDays{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-gap: 4px;
+    position: absolute;
+    top: 60px;
+    z-index: 1;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0px 20px;
+    width: 80%;
+    font-family: var(--main-font);
+    color: var(--text-color);
+    margin: 0;
+    font-size: large;
+
+  }
+
+  #table{
+    width: 100%;
+    height: 100%;
+     border-spacing:0;
+     table-layout: fixed;
+     border-collapse: collapse;
+     
+     
+
+  }
+
+td{
+   vertical-align: middle;
+   text-align: center;
+   font-size: small;
+   width: 14.28%;
+   height: 100%;
+   color: var(--darker-color);
+   padding: 0;
+   transition: all 0.2s ease-in-out;
+
+  }
+
+
+ #calTable{
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 50%;
+    width: 70%;
+    top: 38%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+ } 
+
+ #innerDiv{
+  position: absolute;
+  height: 80%;
+  width: 80%;
+  padding: 40px;
+  z-index: 10;
+
+     
+
+ }
+
+ .taskDiv{
+    font-family: var(--main-font);
+    font-size: large;
+ }
+
+ .icon{
+  height: 30px;
+   width: 30px;
+   margin-right: 20px;
+   
+}
+
+.icon:hover{
+  cursor: pointer;
+}
+
+.fullDiv{
+  height: 30px;
+  width: fit-content;
+  font-family: var(--main-color);
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+@keyframes strike {
+  0%{
+    width: 0;
+  }
+  100%{
+    width: 80%;
+  }
+}
+
+.removed{
+   position: relative;
+   width: fit-content;
+}
+
+.removed::after{
+  content: "";
+  position: absolute;
+  left: 40px;
+  top: 50%;
+  height: 2px;
+  background-color: var(--darker-color);
+  width: 0;
+  transform: translateY(-50%);
+  animation: strike 2s forwards ease-out;
+  
+}
+
+ 
+
+
+
+  
+

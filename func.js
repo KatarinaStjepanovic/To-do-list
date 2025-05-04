@@ -1,0 +1,173 @@
+document.addEventListener('DOMContentLoaded', () => {
+      exsTasks();
+})
+
+//calendar
+
+const calendarTd = document.getElementsByTagName('td');
+
+const clearCal = () => {
+    for( let i = 0; i < calendarTd.length; i++){
+        calendarTd[i].textContent = "";
+    }
+}
+
+const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+
+
+
+const d = new Date();
+const currentMonth = months[d.getMonth()];
+
+const monthDiv = document.getElementById('month');
+monthDiv.innerText = currentMonth;
+
+const firstDay = new Date(2025, d.getMonth(), 1).getDay()-1; 
+const daysInMonth = new Date(d.getFullYear(), d.getMonth() + 1, 0).getDate();
+clearCal();
+let dan = 1;
+
+for( let i = firstDay; i <= daysInMonth; i++){
+   calendarTd[i].textContent = dan;
+  
+   if( dan == d.getDate()){
+    const circleDiv = document.createElement('div');
+    calendarTd[i].appendChild(circleDiv);
+    calendarTd[i].classList.add('dateTd');
+    circleDiv.classList.add('currentDate');
+
+   }
+
+   dan++;
+}
+
+//calendar hover
+
+for( let i = 0; i < calendarTd.length; i++){
+    calendarTd[i].addEventListener('mouseover', () => {
+        const value = calendarTd[i].textContent.trim();
+
+        if( value !== "" && !isNaN(value) && Number(value) !== d.getDate()){
+            calendarTd[i].classList.add('hoveredTd');
+  
+        }
+      })
+}
+
+for( let i = 0; i < calendarTd.length; i++){
+    calendarTd[i].addEventListener('mouseout', () => {
+        if( calendarTd[i].textContent != " "){
+            calendarTd[i].classList.remove('hoveredTd');
+  
+        }
+      })
+}
+
+//calendar open
+
+const openGoogleCalendar = (day) => {
+    const year = d.getFullYear();
+    const month = d.getMonth() + 1;
+    const date = `${year}${month.toString().padStart(2, '0')}${day.padStart(2, '0')}`;
+    const url = `https://calendar.google.com/calendar/render?action=TEMPLATE&dates=${date}T090000Z/${date}T100000Z&text=New+Task`;
+
+    window.open(url, '_blank');
+};
+
+for( let i = 0; i < calendarTd.length; i++){
+    calendarTd[i].addEventListener('click', () => {
+        const day = calendarTd[i].textContent.trim();
+        if (day !== "" && !isNaN(day)) {
+            openGoogleCalendar(day);
+        }
+    })
+}
+
+//lista
+
+let tasks = [];
+
+class taskDiv{
+    constructor(value){
+        this.element = document.createElement('div');
+        this.element.innerText = value;
+        this.element.classList.add('taskDiv');
+        localStorage.setItem(`task ${value}`, value);
+
+    }
+
+    fullDiv(){
+        const fullDiv = document.createElement('div');
+        const icon = document.createElement('img');
+        icon.src = './assets/do.png';
+        icon.classList.add('icon');
+        this.element.appendChild(icon);
+        fullDiv.appendChild(icon);
+        fullDiv.appendChild(this.element);
+        fullDiv.classList.add('fullDiv');
+        icon.addEventListener('click', () => {
+            icon.src = './assets/done.png';
+            fullDiv.classList.add('removed');
+            setTimeout(() => {
+                localStorage.removeItem(`task ${this.element.innerText}`);
+               fullDiv.remove();
+             
+               
+            }, 3000)
+        });
+
+        return fullDiv;
+    }
+}
+
+
+
+
+const getElements =  (task) => {
+    const div = document.getElementById('innerDiv');
+    div.appendChild(new taskDiv(task).fullDiv());
+}
+
+
+const addBtn = document.getElementById('new');
+
+addBtn.addEventListener('click', () => {
+    if( tasks.length < 8){
+        const input = document.getElementById('inpl');
+    const value = input.value;
+    tasks.push(value);
+ 
+   getElements(value);
+   input.value = '';
+    }
+  
+})
+
+
+
+const exsTasks = () => {
+    for( let i = 0; i < localStorage.length; i++){
+        const task = localStorage.getItem(localStorage.key(i));
+        console.log(task);
+        getElements(task);
+    }
+}
+
+
+
+
+
+

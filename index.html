@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To do</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+</head>
+<body>
+   <div id="top">
+       <input type="text" id="inpl" placeholder="Add new task">
+       <div id="bubbleIn"></div>
+       <img src="./assets/input.png" alt="Input" id="inputPic">
+       <img src="./assets/plus.png" alt="Add" id="new">
+   </div>
+  <div class="grid">
+    <div id="left">
+        <div id="progBubble">
+            <div id="procenat">25%</div>
+            <progress value="25" max="100" id="progressBar"></progress>
+        </div>
+        <img src="./assets/progress.png" alt="Progress" id="progOkvir">
+
+        <div id="calendar">
+            <div id="month">May</div>
+            <hr id="underline">
+            <div id="weekDays">
+                <div>Mo</div>
+                <div>Tu</div>
+                <div>We</div>
+                <div>Th</div>
+                <div>Fr</div>
+                <div>Sa</div>
+                <div>Su</div>
+            </div>
+            <div id="calTable">
+                <table id="table">
+                    <tr>
+                    <td> </td>
+                    <td>1</td>
+                    <td>2</td>
+                    <td>3</td>
+                    <td>4</td>
+                    <td>5</td>
+                    <td>6</td></tr>
+                    <tr><td>5</td>
+                    <td>6</td>
+                    <td>1</td>
+                    <td>2</td>
+                    <td>3</td>
+                    <td>4</td>
+                    <td>5</td></tr>
+                    <tr>
+                    <td>1</td>
+                    <td>2</td>
+                    <td>3</td>
+                    <td>4</td>
+                    <td>5</td>
+                    <td>6</td>
+                    <td>7</td></tr>
+                    <tr><td>1</td>
+                    <td>2</td>
+                    <td>3</td>
+                    <td>4</td>
+                    <td>30</td>
+                    <td>12</td>
+                    <td>11</td></tr>
+                    <tr>
+                    <td>12</td>
+                    <td>11</td>
+                    <td>34</td>
+                    <td>4</td>
+                    <td>45</td>
+                    <td>33</td>
+                    <td>22</td>
+                </tr>
+                    
+                </table>
+            </div>
+        </div>
+        
+    </div>
+    <div id="right">
+        <div id="listBubble"></div>
+        <div id="list">
+            <div id="innerDiv"></div>
+        </div>
+        
+                
+        </div>
+        <img src="./assets/okvir.png" alt="Okvir" id="imgList">
+    </div>
+  </div>
+
+    <script src="./func.js" type="module"></script>
+</body>
+</html>
