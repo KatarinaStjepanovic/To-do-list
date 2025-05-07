@@ -108,7 +108,7 @@ let fin = 0;
 const getDate = () => {
     const today = new Date().getDay();
     if( today == localStorage.getItem('today')){
-         fin = localStorage.getItem('finished');
+         fin = parseInt(localStorage.getItem('finished'));
 
     }else{
         localStorage.setItem('today', today);
@@ -124,8 +124,8 @@ const getElements =  (task) => {
         if( tasks.length < 8 && Array.from(div.classList).includes('scroll')){
            div.classList.remove('scroll');
         }
-    num.innerText = fin!=0 ? Math.ceil(fin / tasks.length * 100) : 0;
-    procent.value = fin!=0 ? Math.ceil(fin / tasks.length * 100) : 0;
+    num.innerText = fin!=0  ? Math.ceil(fin / (tasks.length+fin) * 100) : 0;
+    procent.value = fin!=0  ? Math.ceil(fin / (tasks.length+fin) * 100) : 0;
     div.appendChild(new taskDiv(task).fullDiv());
 }
 
@@ -170,6 +170,8 @@ const exsTasks = () => {
     for( let i = 0; i < localStorage.length; i++){
         if( localStorage.key(i).includes('task')){
             const task = localStorage.getItem(localStorage.key(i));
+            console.log(task);
+
             tasks.push(task);
             getElements(task);
 
@@ -201,9 +203,12 @@ class taskDiv{
             icon.src = './assets/done.png';
             fullDiv.classList.add('removed');
             setTimeout(() => {
+                const index = tasks.findIndex(task => this.element.innerText === task);
                 localStorage.removeItem(`task ${this.element.innerText}`);  
                fullDiv.remove();
+               tasks.splice(index,1);
                fin++;
+               localStorage.setItem('finished', fin);
               setProgress();
               
 
@@ -218,12 +223,13 @@ class taskDiv{
 
 const getProgress = () => {
     const prog = localStorage.getItem('progress');
+    fin = localStorage.getItem('finished');
     num.innerText = prog;
     procent.value = prog;
 }
 
 const setProgress = () => {
-    const prog = fin!=0 ? Math.ceil(fin / tasks.length * 100) : 0;
+    const prog = fin!=0 ? Math.ceil(fin / (tasks.length+fin) * 100) : 0;
     num.innerText = prog;
     procent.value = prog;
     localStorage.setItem('progress', prog);
