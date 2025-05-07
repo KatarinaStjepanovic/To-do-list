@@ -129,17 +129,28 @@ const getElements =  (task) => {
 
 
 const addBtn = document.getElementById('new');
+const input = document.getElementById('inpl');
+
+const addingTask  = () => {
+    if( tasks.length < 8){
+        const value = input.value;
+        tasks.push(value);
+       getElements(value);
+       setProgress();
+       input.value = '';
+    
+        }
+}
+
+input.addEventListener('keypress', (e) => {
+    if( e.key == "Enter"){
+        addingTask();
+    }
+})
+
 
 addBtn.addEventListener('click', () => {
-    if( tasks.length < 8){
-        const input = document.getElementById('inpl');
-    const value = input.value;
-    tasks.push(value);
-   getElements(value);
-   setProgress();
-   input.value = '';
-
-    }
+    addingTask();
   
 })
 
