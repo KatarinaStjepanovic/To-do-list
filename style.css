@@ -166,7 +166,7 @@ body{
     justify-content: center;
 }
 
-#procenat{
+.procenat{
     font-family: var(--main-font);
     color: var(--text-color);
     font-weight: bold;
@@ -380,6 +380,10 @@ td{
   transform: translateY(-50%);
   animation: strike 2s forwards ease-out;
   
+}
+
+.scroll{
+    overflow-y: scroll;
 }
 
  

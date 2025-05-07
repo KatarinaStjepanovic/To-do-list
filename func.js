@@ -101,6 +101,7 @@ for( let i = 0; i < calendarTd.length; i++){
 //lista
 const procent = document.getElementById('progressBar');
 const num = document.getElementById('procenat');
+const div = document.getElementById('innerDiv');
 let tasks = [];
 let fin = 0;
 
@@ -120,10 +121,11 @@ const getDate = () => {
 
 
 const getElements =  (task) => {
+        if( tasks.length < 8 && Array.from(div.classList).includes('scroll')){
+           div.classList.remove('scroll');
+        }
     num.innerText = fin!=0 ? Math.ceil(fin / tasks.length * 100) : 0;
     procent.value = fin!=0 ? Math.ceil(fin / tasks.length * 100) : 0;
-    
-    const div = document.getElementById('innerDiv');
     div.appendChild(new taskDiv(task).fullDiv());
 }
 
@@ -133,13 +135,20 @@ const input = document.getElementById('inpl');
 
 const addingTask  = () => {
     if( tasks.length < 8){
+        if(Array.from(div.classList).includes('scroll')){
+            div.classList.remove('scroll');
+        }
+    
+        }else{
+          div.classList.add('scroll');
+          
+        }
+
         const value = input.value;
         tasks.push(value);
        getElements(value);
        setProgress();
        input.value = '';
-    
-        }
 }
 
 input.addEventListener('keypress', (e) => {
@@ -157,6 +166,7 @@ addBtn.addEventListener('click', () => {
 
 
 const exsTasks = () => {
+     
     for( let i = 0; i < localStorage.length; i++){
         if( localStorage.key(i).includes('task')){
             const task = localStorage.getItem(localStorage.key(i));
@@ -194,7 +204,6 @@ class taskDiv{
                 localStorage.removeItem(`task ${this.element.innerText}`);  
                fullDiv.remove();
                fin++;
-               console.log(tasks.length)
               setProgress();
               
 
