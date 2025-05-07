@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
       exsTasks();
       getDate();
+      getProgress();
 })
 
 //calendar
@@ -134,8 +135,8 @@ addBtn.addEventListener('click', () => {
         const input = document.getElementById('inpl');
     const value = input.value;
     tasks.push(value);
- 
    getElements(value);
+   setProgress();
    input.value = '';
 
     }
@@ -146,14 +147,13 @@ addBtn.addEventListener('click', () => {
 
 const exsTasks = () => {
     for( let i = 0; i < localStorage.length; i++){
-        if( localStorage.key(i) == 'finished' || localStorage.key(i) == 'today'){
-            continue;
+        if( localStorage.key(i).includes('task')){
+            const task = localStorage.getItem(localStorage.key(i));
+            tasks.push(task);
+            getElements(task);
 
         }
-        const task = localStorage.getItem(localStorage.key(i));
-        tasks.push(task);
-        console.log(task);
-        getElements(task);
+       
     }
 }
 
@@ -180,12 +180,12 @@ class taskDiv{
             icon.src = './assets/done.png';
             fullDiv.classList.add('removed');
             setTimeout(() => {
-                localStorage.removeItem(`task ${this.element.innerText}`);
+                localStorage.removeItem(`task ${this.element.innerText}`);  
                fullDiv.remove();
                fin++;
                console.log(tasks.length)
-               num.innerText = fin!=0 ? Math.ceil(fin / tasks.length * 100) : 0;
-    procent.value = fin!=0 ? Math.ceil(fin / tasks.length * 100) : 0;
+              setProgress();
+              
 
              
                
@@ -194,6 +194,19 @@ class taskDiv{
 
         return fullDiv;
     }
+}
+
+const getProgress = () => {
+    const prog = localStorage.getItem('progress');
+    num.innerText = prog;
+    procent.value = prog;
+}
+
+const setProgress = () => {
+    const prog = fin!=0 ? Math.ceil(fin / tasks.length * 100) : 0;
+    num.innerText = prog;
+    procent.value = prog;
+    localStorage.setItem('progress', prog);
 }
 
 
