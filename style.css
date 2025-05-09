@@ -386,6 +386,13 @@ td{
     overflow-y: scroll;
 }
 
+.past{
+  background-color: var(--num-color);
+   border-radius: 50%;
+   color: var(--darker-color);
+   cursor: pointer;
+}
+
  
 
 

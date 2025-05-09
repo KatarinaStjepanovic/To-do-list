@@ -42,7 +42,7 @@ const daysInMonth = new Date(d.getFullYear(), d.getMonth() + 1, 0).getDate();
 clearCal();
 let dan = 1;
 
-for( let i = firstDay; i <= daysInMonth; i++){
+for( let i = firstDay; i < daysInMonth + firstDay; i++){
    calendarTd[i].textContent = dan;
   
    if( dan == d.getDate()){
@@ -63,7 +63,12 @@ for( let i = 0; i < calendarTd.length; i++){
         const value = calendarTd[i].textContent.trim();
 
         if( value !== "" && !isNaN(value) && Number(value) !== d.getDate()){
-            calendarTd[i].classList.add('hoveredTd');
+            if( value <=  d.getDate()){
+                calendarTd[i].classList.add('past');
+            }else{
+                calendarTd[i].classList.add('hoveredTd');
+            }
+            
   
         }
       })
@@ -72,7 +77,7 @@ for( let i = 0; i < calendarTd.length; i++){
 for( let i = 0; i < calendarTd.length; i++){
     calendarTd[i].addEventListener('mouseout', () => {
         if( calendarTd[i].textContent != " "){
-            calendarTd[i].classList.remove('hoveredTd');
+            calendarTd[i].classList.remove( Array.from(calendarTd[i].classList).includes('hoveredTd') ?  'hoveredTd' : 'past');
   
         }
       })
@@ -92,7 +97,8 @@ const openGoogleCalendar = (day) => {
 for( let i = 0; i < calendarTd.length; i++){
     calendarTd[i].addEventListener('click', () => {
         const day = calendarTd[i].textContent.trim();
-        if (day !== "" && !isNaN(day)) {
+        console.log(d.getDay);
+        if (day !== "" && !isNaN(day) && day >= d.getDay()) {
             openGoogleCalendar(day);
         }
     })
@@ -106,11 +112,11 @@ let tasks = [];
 let fin = 0;
 
 const getDate = () => {
-    const today = new Date().getDay();
+    const today = d.getDate();
     if( today == localStorage.getItem('today')){
          fin = parseInt(localStorage.getItem('finished'));
-
     }else{
+        localStorage.clear();
         localStorage.setItem('today', today);
         localStorage.setItem('finished', 0);
     }
@@ -168,6 +174,11 @@ addBtn.addEventListener('click', () => {
 const exsTasks = () => {
      
     for( let i = 0; i < localStorage.length; i++){
+        if( tasks.length < 8 && Array.from(div.classList).includes('scroll')){
+            div.classList.remove('scroll');
+         }else{
+            div.classList.add('scroll');
+         }
         if( localStorage.key(i).includes('task')){
             const task = localStorage.getItem(localStorage.key(i));
             console.log(task);
@@ -226,10 +237,13 @@ const getProgress = () => {
     fin = localStorage.getItem('finished');
     num.innerText = prog;
     procent.value = prog;
+    if( prog == null){
+        num.innerText = '0';
+    }
 }
 
 const setProgress = () => {
-    const prog = fin!=0 ? Math.ceil(fin / (tasks.length+fin) * 100) : 0;
+    const prog = fin !=0 ? Math.ceil(fin / (tasks.length+fin) * 100) : 0;
     num.innerText = prog;
     procent.value = prog;
     localStorage.setItem('progress', prog);
