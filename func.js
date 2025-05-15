@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
+         getDate();
       exsTasks();
-      getDate();
       getProgress();
 })
 
@@ -97,8 +97,7 @@ const openGoogleCalendar = (day) => {
 for( let i = 0; i < calendarTd.length; i++){
     calendarTd[i].addEventListener('click', () => {
         const day = calendarTd[i].textContent.trim();
-        console.log(d.getDay);
-        if (day !== "" && !isNaN(day) && day >= d.getDay()) {
+        if (day !== "" && !isNaN(day) && day >= d.getDate()) {
             openGoogleCalendar(day);
         }
     })
@@ -140,12 +139,10 @@ const addBtn = document.getElementById('new');
 const input = document.getElementById('inpl');
 
 const addingTask  = () => {
-    if( tasks.length < 8){
-        if(Array.from(div.classList).includes('scroll')){
+        if(Array.from(div.classList).includes('scroll') &&  tasks.length < 8){
             div.classList.remove('scroll');
         }
-    
-        }else{
+          else{
           div.classList.add('scroll');
           
         }
@@ -174,21 +171,22 @@ addBtn.addEventListener('click', () => {
 const exsTasks = () => {
      
     for( let i = 0; i < localStorage.length; i++){
-        if( tasks.length < 8 && Array.from(div.classList).includes('scroll')){
-            div.classList.remove('scroll');
-         }else{
-            div.classList.add('scroll');
-         }
         if( localStorage.key(i).includes('task')){
             const task = localStorage.getItem(localStorage.key(i));
-            console.log(task);
 
             tasks.push(task);
             getElements(task);
 
         }
+
        
     }
+
+     if( tasks.length < 8){
+            div.classList.remove('scroll');
+         }else{
+            div.classList.add('scroll');
+         }
 }
 
 
@@ -210,6 +208,25 @@ class taskDiv{
         fullDiv.appendChild(icon);
         fullDiv.appendChild(this.element);
         fullDiv.classList.add('fullDiv');
+        fullDiv.addEventListener('dblclick', () => {
+             const taskKey = `task ${this.element.innerText}`; 
+            localStorage.removeItem(taskKey);
+            this.element.setAttribute('contenteditable', 'true');
+            this.element.focus();
+
+        const onBlur = () => {
+        const newValue = this.element.innerText.trim();
+        const newKey = `task ${newValue}`;
+        localStorage.setItem(newKey, newValue);
+        this.element.removeAttribute('contenteditable');
+
+        this.element.removeEventListener('blur', onBlur);
+    };
+
+    this.element.addEventListener('blur', onBlur);
+
+        })
+       
         icon.addEventListener('click', () => {
             icon.src = './assets/done.png';
             fullDiv.classList.add('removed');
@@ -218,6 +235,9 @@ class taskDiv{
                 localStorage.removeItem(`task ${this.element.innerText}`);  
                fullDiv.remove();
                tasks.splice(index,1);
+                if( tasks.length < 8 && Array.from(div.classList).includes('scroll')){
+            div.classList.remove('scroll');
+         }
                fin++;
                localStorage.setItem('finished', fin);
               setProgress();
@@ -248,6 +268,7 @@ const setProgress = () => {
     procent.value = prog;
     localStorage.setItem('progress', prog);
 }
+
 
 
 
