@@ -1,13 +1,9 @@
-document.addEventListener('DOMContentLoaded', () => {
-         getDate();
-      exsTasks();
-      getProgress();
-})
+
 
 //calendar
 
 const calendarTd = document.getElementsByTagName('td');
-
+console.log(calendarTd)
 const clearCal = () => {
     for( let i = 0; i < calendarTd.length; i++){
         calendarTd[i].textContent = "";
@@ -37,13 +33,24 @@ const currentMonth = months[d.getMonth()];
 const monthDiv = document.getElementById('month');
 monthDiv.innerText = currentMonth;
 
-const firstDay = new Date(2025, d.getMonth(), 1).getDay()-1; 
+const firstDay = (new Date(2025, d.getMonth(), 1).getDay() + 6) % 7;
 const daysInMonth = new Date(d.getFullYear(), d.getMonth() + 1, 0).getDate();
+console.log(firstDay)
 clearCal();
+
 let dan = 1;
 
 for( let i = firstDay; i < daysInMonth + firstDay; i++){
+
+    if( firstDay == 6){
+        const newR = document.getElementById('newR');
+       newR.style.visibility = 'visible';
+       const cal = document.getElementById('calendar');
+       cal.style.height = "280px";
+
+    }
    calendarTd[i].textContent = dan;
+   console.log(dan)
   
    if( dan == d.getDate()){
     const circleDiv = document.createElement('div');
@@ -93,6 +100,8 @@ const openGoogleCalendar = (day) => {
 
     window.open(url, '_blank');
 };
+
+console.log(calendarTd)
 
 for( let i = 0; i < calendarTd.length; i++){
     calendarTd[i].addEventListener('click', () => {
@@ -268,6 +277,12 @@ const setProgress = () => {
     procent.value = prog;
     localStorage.setItem('progress', prog);
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+         getDate();
+      exsTasks();
+      getProgress();
+})
 
 
 
